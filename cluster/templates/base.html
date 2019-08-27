@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/site.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="tm-left-right-container">
+                <!-- Left column: logo and menu -->
+                <div class="tm-blue-bg tm-left-column">
+                    <div class="tm-logo-div text-xs-center">
+                        <img src="{% static 'img/logo_transparent.png' %}" alt="Logo" height="300" width="300">
+                    </div>
+                    <nav class="tm-main-nav">
+                        <ul class="tm-main-nav-ul">
+                            <li class="tm-nav-item">
+                                <a href="{%  url 'nodes' %}" class="tm-nav-item-link">Nodes</a>
+                            </li>
+                            <li class="tm-nav-item">
+                                <a href="{%  url 'resources' %}" class="tm-nav-item-link">Resources</a>
+                            </li>
+                            <li class="tm-nav-item">
+                                <a href="{%  url 'agents' %}" class="tm-nav-item-link">Agents</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div> <!-- Left column: logo and menu -->
+            </div>
+            <div class="tm-right-column">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>

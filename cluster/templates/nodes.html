@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Nodes{% endblock %}
+{% block content %}
+    <ul>
+    {% if nodes %}
+        {% for node in nodes %}
+        <li> node: {{ node.name }} id: {{ node.id }} status: {{ node.status }} maintenance: {{ node.maintenance }}</li>
+        {% endfor %}
+    {% endif %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,4 @@
+Get nodes:
+    crm node status
+
+Set resource:
