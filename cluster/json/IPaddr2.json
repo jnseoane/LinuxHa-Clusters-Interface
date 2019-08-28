@@ -1,0 +1,197 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "IPaddr2",
+  "resource": "ocf:heartbeat:IPaddr2",
+  "title": "Manages virtual IPv4 and IPv6 addresses (Linux specific version)",
+  "description": "This Linux-specific resource manages IP alias IP addresses. It can add an IP alias, or remove one. In addition, it can implement Cluster Alias IP functionality if invoked as a clone resource.  If used as a clone, you should explicitly set clone-node-max >= 2, and/or clone-max < number of nodes. In case of node failure, clone instances need to be re-allocated on surviving nodes. This would not be possible if there is already an instance on those nodes, and clone-node-max=1 (which is the default).",
+  "params": [
+    {
+      "name": "ip",
+      "title": "IPv4 or IPv6 address",
+      "descripion": "The IPv4 (dotted quad notation) or IPv6 address (colon hexadecimal notation) example IPv4 \"192.168.1.1\". example IPv6 \"2001:db8:DC28:0:0:FC57:D4C8:1FFF\".",
+      "required": true,
+      "unique": true,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "nic",
+      "title": "Network interface",
+      "descripion": "The base network interface on which the IP address will be brought online.  If left empty, the script will try and determine this from the routing table.  Do NOT specify an alias interface in the form eth0:1 or anything here; rather, specify the base interface only. If you want a label, see the iflabel parameter.  Prerequisite:  There must be at least one static IP address, which is not managed by the cluster, assigned to the network interface. If you can not assign any static IP address on the interface, modify this kernel parameter:  sysctl -w net.ipv4.conf.all.promote_secondaries=1 # (or per device)",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "cidr_netmask",
+      "title": "CIDR netmask",
+      "descripion": "The netmask for the interface in CIDR format (e.g., 24 and not 255.255.255.0)  If unspecified, the script will also try to determine this from the routing table.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "broadcast",
+      "title": "Broadcast address",
+      "descripion": "Broadcast address associated with the IP. It is possible to use the special symbols '+' and '-' instead of the broadcast address. In this case, the broadcast address is derived by setting/resetting the host bits of the interface prefix.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "iflabel",
+      "title": "Interface label",
+      "descripion": "You can specify an additional label for your IP address here. This label is appended to your interface name.  The kernel allows alphanumeric labels up to a maximum length of 15 characters including the interface name and colon (e.g. eth0:foobar1234)  A label can be specified in nic parameter but it is deprecated. If a label is specified in nic name, this parameter has no effect.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "lvs_support",
+      "title": "Enable support for LVS DR",
+      "descripion": "Enable support for LVS Direct Routing configurations. In case a IP address is stopped, only move it to the loopback device to allow the local node to continue to service requests, but no longer advertise it on the network.  Notes for IPv6: It is not necessary to enable this option on IPv6. Instead, enable 'lvs_ipv6_addrlabel' option for LVS-DR usage on IPv6.",
+      "required": false,
+      "unique": false,
+      "content_type": "boolean",
+      "default_value": "false"
+    },
+    {
+      "name": "lvs_ipv6_addrlabel",
+      "title": "Enable adding IPv6 address label.",
+      "descripion": "Enable adding IPv6 address label so IPv6 traffic originating from the address's interface does not use this address as the source. This is necessary for LVS-DR health checks to realservers to work. Without it, the most recently added IPv6 address (probably the address added by IPaddr2) will be used as the source address for IPv6 traffic from that interface and since that address exists on loopback on the realservers, the realserver response to pings/connections will never leave its loopback. See RFC3484 for the detail of the source address selection.  See also 'lvs_ipv6_addrlabel_value' parameter.",
+      "required": false,
+      "unique": false,
+      "content_type": "boolean",
+      "default_value": "false"
+    },
+    {
+      "name": "lvs_ipv6_addrlabel_value",
+      "title": "IPv6 address label value.",
+      "descripion": "Specify IPv6 address label value used when 'lvs_ipv6_addrlabel' is enabled. The value should be an unused label in the policy table which is shown by 'ip addrlabel list' command. You would rarely need to change this parameter.",
+      "required": false,
+      "unique": false,
+      "content_type": "integer",
+      "default_value": "99"
+    },
+    {
+      "name": "mac",
+      "title": "Cluster IP MAC address",
+      "descripion": "Set the interface MAC address explicitly. Currently only used in case of the Cluster IP Alias. Leave empty to chose automatically.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "clusterip_hash",
+      "title": "Cluster IP hashing function",
+      "descripion": "Specify the hashing algorithm used for the Cluster IP functionality.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "sourceip-sourceport"
+    },
+    {
+      "name": "unique_clone_address",
+      "title": "Create a unique address for cloned instances",
+      "descripion": "If true, add the clone ID to the supplied value of IP to create a unique address to manage",
+      "required": false,
+      "unique": false,
+      "content_type": "boolean",
+      "default_value": "false"
+    },
+    {
+      "name": "arp_interval",
+      "title": "ARP packet interval in ms (deprecated)",
+      "descripion": "Specify the interval between unsolicited ARP packets in milliseconds.  This parameter is deprecated and used for the backward compatibility only. It is effective only for the send_arp binary which is built with libnet, and send_ua for IPv6. It has no effect for other arp_sender.",
+      "required": false,
+      "unique": false,
+      "content_type": "integer",
+      "default_value": "200"
+    },
+    {
+      "name": "arp_count",
+      "title": "ARP packet count sent during initialization",
+      "descripion": "Number of unsolicited ARP packets to send at resource initialization.",
+      "required": false,
+      "unique": false,
+      "content_type": "integer",
+      "default_value": "5"
+    },
+    {
+      "name": "arp_count_refresh",
+      "title": "ARP packet count sent during monitoring",
+      "descripion": "Number of unsolicited ARP packets to send during resource monitoring. Doing so helps mitigate issues of stuck ARP caches resulting from split-brain situations.",
+      "required": false,
+      "unique": false,
+      "content_type": "integer",
+      "default_value": "0"
+    },
+    {
+      "name": "arp_bg",
+      "title": "ARP from background",
+      "descripion": "Whether or not to send the ARP packets in the background.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "true"
+    },
+    {
+      "name": "arp_sender",
+      "title": "ARP sender",
+      "descripion": "The program to send ARP packets with on start. Available options are:  - send_arp: default  - ipoibarping: default for infiniband interfaces if ipoibarping is available  - iputils_arping: use arping in iputils package  - libnet_arping: use another variant of arping based on libnet",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "send_arp_opts",
+      "title": "Options for ARP sender",
+      "descripion": "Extra options to pass to the arp_sender program. Available options are vary depending on which arp_sender is used.  A typical use case is specifying '-A' for iputils_arping to use ARP REPLY instead of ARP REQUEST as Gratuitous ARPs.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "flush_routes",
+      "title": "Flush kernel routing table on stop",
+      "descripion": "Flush the routing table on stop. This is for applications which use the cluster IP address and which run on the same physical host that the IP address lives on. The Linux kernel may force that application to take a shortcut to the local loopback interface, instead of the interface the address is really bound to. Under those circumstances, an application may, somewhat unexpectedly, continue to use connections for some time even after the IP address is deconfigured. Set this parameter in order to immediately disable said shortcut when the IP address goes away.",
+      "required": false,
+      "unique": false,
+      "content_type": "boolean",
+      "default_value": "false"
+    },
+    {
+      "name": "run_arping",
+      "title": "Run arping for IPv4 collision detection check",
+      "descripion": "Whether or not to run arping for IPv4 collision detection check.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "false"
+    },
+    {
+      "name": "preferred_lft",
+      "title": "IPv6 preferred lifetime",
+      "descripion": "For IPv6, set the preferred lifetime of the IP address. This can be used to ensure that the created IP address will not be used as a source address for routing. Expects a value as specified in section 5.5.4 of RFC 4862.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "forever"
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "status",
+    "monitor",
+    "meta-data",
+    "validate-all"
+  ]
+}

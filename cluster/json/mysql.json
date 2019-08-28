@@ -1,0 +1,202 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "mysql",
+  "resource": "ocf:heartbeat:mysql",
+  "title": "Manages a MySQL database instance",
+  "description": "Resource script for MySQL. May manage a standalone MySQL database, a clone set with externally managed replication, or a complete master/slave replication setup. Note, when master/slave replication is in use, the resource must be setup to use notifications. Set 'notify=true' in the metadata attributes when defining a MySQL master/slave instance.  While managing replication, the default behavior is to use uname -n  values in the change master to command.  Other IPs can be specified  manually by adding a node attribute ${INSTANCE_ATTR_NAME}_mysql_master_IP giving the IP to use for replication.  For example, if the mysql primitive  you are using is p_mysql, the attribute to set will be  p_mysql_mysql_master_IP.",
+  "params": [
+    {
+      "name": "binary",
+      "title": "MySQL server binary",
+      "descripion": "Location of the MySQL server binary",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/usr/bin/mysqld_safe"
+    },
+    {
+      "name": "client_binary",
+      "title": "MySQL client binary",
+      "descripion": "Location of the MySQL client binary",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "mysql"
+    },
+    {
+      "name": "config",
+      "title": "MySQL config",
+      "descripion": "Configuration file",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/etc/mysql/my.cnf"
+    },
+    {
+      "name": "datadir",
+      "title": "MySQL datadir",
+      "descripion": "Directory containing databases",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/var/lib/mysql"
+    },
+    {
+      "name": "user",
+      "title": "MySQL user",
+      "descripion": "User running MySQL daemon",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "mysql"
+    },
+    {
+      "name": "group",
+      "title": "MySQL group",
+      "descripion": "Group running MySQL daemon (for logfile and directory permissions)",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "mysql"
+    },
+    {
+      "name": "log",
+      "title": "MySQL log file",
+      "descripion": "The logfile to be used for mysqld.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/var/log/mysql.log"
+    },
+    {
+      "name": "pid",
+      "title": "MySQL pid file",
+      "descripion": "The pidfile to be used for mysqld.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/var/run/mysqld/mysqld.pid"
+    },
+    {
+      "name": "socket",
+      "title": "MySQL socket",
+      "descripion": "The socket to be used for mysqld.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/var/run/mysqld/mysqld.sock"
+    },
+    {
+      "name": "test_table",
+      "title": "MySQL test table",
+      "descripion": "Table to be tested in monitor statement (in database.table notation)",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "mysql.user"
+    },
+    {
+      "name": "test_user",
+      "title": "MySQL test user",
+      "descripion": "MySQL test user, must have select privilege on test_table",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "root"
+    },
+    {
+      "name": "test_passwd",
+      "title": "MySQL test user password",
+      "descripion": "MySQL test user password",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "enable_creation",
+      "title": "Create the database if it does not exist",
+      "descripion": "If the MySQL database does not exist, it will be created",
+      "required": false,
+      "unique": false,
+      "content_type": "boolean",
+      "default_value": "0"
+    },
+    {
+      "name": "additional_parameters",
+      "title": "Additional parameters to pass to mysqld",
+      "descripion": "Additional parameters which are passed to the mysqld on startup. (e.g. --skip-external-locking or --skip-grant-tables)",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "replication_user",
+      "title": "MySQL replication user",
+      "descripion": "MySQL replication user. This user is used for starting and stopping MySQL replication, for setting and resetting the master host, and for setting and unsetting read-only mode. Because of that, this user must have SUPER, REPLICATION SLAVE, REPLICATION CLIENT, PROCESS and RELOAD privileges on all nodes within the cluster. Mandatory if you define a master-slave resource.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "root"
+    },
+    {
+      "name": "replication_passwd",
+      "title": "MySQL replication user password",
+      "descripion": "MySQL replication password. Used for replication client and slave. Mandatory if you define a master-slave resource.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "replication_port",
+      "title": "MySQL replication port",
+      "descripion": "The port on which the Master MySQL instance is listening.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "3306"
+    },
+    {
+      "name": "max_slave_lag",
+      "title": "Maximum time (seconds) a MySQL slave is allowed to lag behind a master",
+      "descripion": "The maximum number of seconds a replication slave is allowed to lag behind its master. Do not set this to zero. What the cluster manager does in case a slave exceeds this maximum lag is determined by the evict_outdated_slaves parameter.",
+      "required": false,
+      "unique": false,
+      "content_type": "integer",
+      "default_value": "3600"
+    },
+    {
+      "name": "evict_outdated_slaves",
+      "title": "Determines whether to shut down badly lagging slaves",
+      "descripion": "If set to true, any slave which is more than max_slave_lag seconds behind the master has its MySQL instance shut down. If this parameter is set to false in a primitive or clone resource, it is simply ignored. If set to false in a master/slave resource, then exceeding the maximum slave lag will merely push down the master preference so the lagging slave is never promoted to the new master.",
+      "required": false,
+      "unique": false,
+      "content_type": "boolean",
+      "default_value": "false"
+    },
+    {
+      "name": "reader_attribute",
+      "title": "Sets the node attribute that determines whether a node is usable for clients to read from.",
+      "descripion": "An attribute that the RA can manage to specify whether a node can be read from. This node attribute will be 1 if it's fine to read from the node, and 0 otherwise (for example, when a slave has lagged too far behind the master).  A typical example for the use of this attribute would be to tie a set of IP addresses to MySQL slaves that can be read from.  This parameter is only meaningful in master/slave set configurations.",
+      "required": false,
+      "unique": true,
+      "content_type": "string",
+      "default_value": "readable"
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "status",
+    "monitor",
+    "monitor",
+    "monitor",
+    "promote",
+    "demote",
+    "notify",
+    "validate-all",
+    "meta-data"
+  ]
+}

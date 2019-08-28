@@ -1,0 +1,129 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "nginx",
+  "resource": "ocf:heartbeat:nginx",
+  "title": "Manages an Nginx web/proxy server instance",
+  "description": "This is the resource agent for the Nginx web/proxy server. This resource agent does not monitor POP or IMAP servers, as we don't know how to determine meaningful status for them.  The start operation ends with a loop in which monitor is repeatedly called to make sure that the server started and that it is operational. Hence, if the monitor operation does not succeed within the start operation timeout, the nginx resource will end with an error status.  The default monitor operation will verify that nginx is running.  The level 10 monitor operation by default will try and fetch the /nginx_status page - which is commented out in sample nginx configurations. Make sure that the /nginx_status page works and that the access is restricted to localhost (address 127.0.0.1) plus whatever places _outside the cluster_ you want to monitor the server from. See the status10url and status10regex attributes for more details.  The level 20 monitor operation will perform a more complex set of tests from a configuration file.  The level 30 monitor operation will run an external command to perform an arbitrary monitoring operation.",
+  "params": [
+    {
+      "name": "configfile",
+      "title": "configuration file path",
+      "descripion": "The full pathname of the Nginx configuration file. This file is parsed to provide defaults for various other resource agent parameters.",
+      "required": false,
+      "unique": true,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "httpd",
+      "title": "httpd binary path",
+      "descripion": "The full pathname of the httpd binary (optional).",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/usr/sbin/httpd"
+    },
+    {
+      "name": "port",
+      "title": "httpd port",
+      "descripion": "A port number that we can probe for status information using the statusurl. This will default to the port number found in the configuration file, or 80, if none can be found in the configuration file.",
+      "required": false,
+      "unique": false,
+      "content_type": "integer",
+      "default_value": null
+    },
+    {
+      "name": "status10url",
+      "title": "url name",
+      "descripion": "The URL to monitor (the nginx server status page by default) when given a level 10 monitor operation. If left unspecified, it will be inferred from the nginx configuration file, or defaulted to /nginx_status.  If you set this, make sure that it succeeds *only* from the localhost (127.0.0.1) and no other cluster nodes. Otherwise, the cluster software may complain about it being active on multiple nodes.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "status10regex",
+      "title": "monitor regular expression",
+      "descripion": "Regular expression to match in the output of status10url. Case insensitive.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "Reading: [0-9]+ Writing: [0-9]+ Waiting: [0-9]+"
+    },
+    {
+      "name": "testclient",
+      "title": "http client",
+      "descripion": "Client to use to query to Nginx for level 10 and level 20 tests. If not specified, the RA will try to find one on the system. Currently, wget and curl are supported, with curl being preferred. For example, you can set this parameter to \"wget\" if you prefer that to curl.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "test20url",
+      "title": "Level 20 monitor url",
+      "descripion": "URL to test. If it does not start with \"http\", then it's considered to be relative to the document root address.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "test20regex",
+      "title": "Level 20 monitor regular expression",
+      "descripion": "Regular expression to match in the output of test20url. Case insensitive.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "test20conffile",
+      "title": "Level 20 test configuration file",
+      "descripion": "A file which contains a more complex test configuration. Could be useful if you have to check more than one web application or in case sensitive info should be passed as arguments (passwords). Furthermore, using a config file is the only way to specify certain parameters.  Please see README.webapps for examples and file description.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "test20name",
+      "title": "Level 20 test name",
+      "descripion": "Name of the test within the test configuration file.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "external_monitor30_cmd",
+      "title": "Level 30 test string",
+      "descripion": "Command string to run which implements level 30 monitoring.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "options",
+      "title": "nginx start options",
+      "descripion": "Extra options to apply when starting nginx.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "reload",
+    "status",
+    "monitor",
+    "monitor",
+    "monitor",
+    "monitor",
+    "meta-data",
+    "validate-all"
+  ]
+}

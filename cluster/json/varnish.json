@@ -1,0 +1,188 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "varnish",
+  "resource": "ocf:heartbeat:varnish",
+  "title": "Manage a Varnish instance",
+  "description": "The Varnish Resource Agent can manage several varnishd instances throughout the cluster. It does so by creating a unique PID file and requires a unique listen address  and name for each instance.",
+  "params": [
+    {
+      "name": "config",
+      "title": "VCL file",
+      "descripion": "The VCL configuration file that Varnish should manage, for example \"/etc/varnish/default.vcl\".",
+      "required": true,
+      "unique": true,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "name",
+      "title": "Instance name",
+      "descripion": "Override the name of the instance that should be given to Varnish (defaults to the resource identifier).",
+      "required": false,
+      "unique": true,
+      "content_type": "string",
+      "default_value": "RESOURCE_ID"
+    },
+    {
+      "name": "pid",
+      "title": "Listen address",
+      "descripion": "Write the process's PID to the specified file. The default will include the specified name, i.e.: \"/var/run/varnish_production.pid\". Unlike what this help message shows, it is most likely not necessary to change this parameter.",
+      "required": false,
+      "unique": true,
+      "content_type": "string",
+      "default_value": "/var/run/varnishd_RESOURCE_ID.pid"
+    },
+    {
+      "name": "listen_address",
+      "title": "Listen address",
+      "descripion": "Listen on this address:port, for example \"192.168.1.1:80\"",
+      "required": false,
+      "unique": true,
+      "content_type": "string",
+      "default_value": "0.0.0.0:80"
+    },
+    {
+      "name": "mgmt_address",
+      "title": "Management interface",
+      "descripion": "Provide a management interface, for example \"127.0.0.1:2222\"",
+      "required": true,
+      "unique": true,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "ttl",
+      "title": "TTL",
+      "descripion": "Specify a hard minimum time to live for cached documents.",
+      "required": false,
+      "unique": false,
+      "content_type": "integer",
+      "default_value": "600"
+    },
+    {
+      "name": "varnish_user",
+      "title": "Unprivileged user",
+      "descripion": "Specify the name of an unprivileged user to which the  child process should switch before it starts accepting  connections.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "varnish"
+    },
+    {
+      "name": "varnish_group",
+      "title": "Unprivileged group",
+      "descripion": "Specify the name of an unprivileged group to which  the child process should switch before it starts accepting  connections.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "varnish"
+    },
+    {
+      "name": "backend_type",
+      "title": "Backend type",
+      "descripion": "Use the specified storage backend. Valid options are 'malloc' for memory and 'file' for a file backend.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "malloc"
+    },
+    {
+      "name": "backend_size",
+      "title": "Backend size",
+      "descripion": "Specify the size of the backend. For example \"1G\".",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "1G"
+    },
+    {
+      "name": "backend_file",
+      "title": "Backend file",
+      "descripion": "Specify the backend filename if you use backend_type file.  For example /var/lib/varnish/mybackend.bin",
+      "required": false,
+      "unique": true,
+      "content_type": "string",
+      "default_value": "/var/lib/varnish/RESOURCE_ID.bin"
+    },
+    {
+      "name": "threads_pools",
+      "title": "Worker thread pools",
+      "descripion": "Number of worker thread pools. Each pool has the minimum, maximum and timeout values configured in the thread_pool_min, thread_pool_max and thread_pool_timeout parameters",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "2"
+    },
+    {
+      "name": "thread_pool_min",
+      "title": "Minimum worker threads",
+      "descripion": "Start  at  least  min but no more than max worker  threads with the specified idle timeout in each pool.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "100"
+    },
+    {
+      "name": "thread_pool_max",
+      "title": "Maximum worker threads",
+      "descripion": "Start  at  least  min but no more than max worker  threads with the specified idle timeout in each pool.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "3000"
+    },
+    {
+      "name": "thread_pool_timeout",
+      "title": "Worker threads timeout",
+      "descripion": "Start  at  least  min but no more than max worker  threads with the specified idle timeout in each pool.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "120"
+    },
+    {
+      "name": "client_binary",
+      "title": "Varnish admin utility",
+      "descripion": "This is used to control Varnish via a CLI. It's currently only used to check the status of the running child process.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "varnishadm"
+    },
+    {
+      "name": "maxfiles",
+      "title": "Max open files",
+      "descripion": "Maximum number of open files (for ulimit -n)",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "131072"
+    },
+    {
+      "name": "max_locked_memory",
+      "title": "Max locked memory",
+      "descripion": "Locked shared memory limit (for ulimit -l)",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "82000"
+    },
+    {
+      "name": "secret",
+      "title": "Path of the secret file",
+      "descripion": "Path to a file containing a secret used for authorizing access to the management port.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/etc/varnish/secret"
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "monitor",
+    "status",
+    "meta-data",
+    "validate-all"
+  ]
+}

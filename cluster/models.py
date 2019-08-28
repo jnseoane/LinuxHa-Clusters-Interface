@@ -29,13 +29,18 @@ class Resource_Param(models.Model):
 class Agent(models.Model):
     resource = models.ForeignKey(Resource, on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=30)
-    route = models.CharField(max_length=200)
+    resource_str = models.CharField(max_length=200)
+    title = models.CharField(max_length=100, default="title")
+    description = models.TextField(default="description")
 
 
 class Agent_Param(models.Model):
     agent = models.ForeignKey(Agent, on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
-    type = models.CharField(max_length=100)
+    title = models.CharField(max_length=200, default="title")
+    description = models.TextField(default="description")
+    required = models.BooleanField(default=False)
+    unique = models.BooleanField(default=False)
+    content_type = models.CharField(max_length=50, default="content-type")
+    default_value = models.CharField(max_length=150, default="default", null=True)
 
-    def __str__(self):
-        return self.name + ": " + self.value

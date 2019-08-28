@@ -1,0 +1,80 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "proftpd",
+  "resource": "ocf:heartbeat:proftpd",
+  "title": "OCF Resource Agent compliant FTP script.",
+  "description": "This script manages Proftpd in an Active-Passive setup",
+  "params": [
+    {
+      "name": "binary",
+      "title": "The Proftpd binary",
+      "descripion": "The Proftpd binary",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/usr/sbin/proftpd"
+    },
+    {
+      "name": "conffile",
+      "title": "Configuration file name with full path",
+      "descripion": "The Proftpd configuration file name with full path.  For example, \"/etc/proftpd.conf\"",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/etc/proftpd.conf"
+    },
+    {
+      "name": "pidfile",
+      "title": "PID file",
+      "descripion": "The Proftpd PID file. The location of the PID file is configured in the Proftpd configuration file.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/var/run/proftpd.pid"
+    },
+    {
+      "name": "curl_binary",
+      "title": "The absolute path to the curl binary",
+      "descripion": "The absolute path to the curl binary for monitoring with OCF_CHECK_LEVEL greater zero.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/usr/bin/curl"
+    },
+    {
+      "name": "curl_url",
+      "title": "The URL which is checked by curl",
+      "descripion": "The URL which is checked by curl with OCF_CHECK_LEVEL greater zero.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "ftp://localhost/"
+    },
+    {
+      "name": "test_user",
+      "title": "The name of the ftp user",
+      "descripion": "The name of the ftp user for monitoring with OCF_CHECK_LEVEL greater zero.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "test"
+    },
+    {
+      "name": "test_pass",
+      "title": "The password of the ftp user",
+      "descripion": "The password of the ftp user for monitoring with OCF_CHECK_LEVEL greater zero.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "monitor",
+    "monitor",
+    "validate-all",
+    "meta-data"
+  ]
+}

@@ -1,0 +1,80 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "Squid",
+  "resource": "ocf:heartbeat:Squid",
+  "title": "Manages a Squid proxy server instance",
+  "description": "The resource agent of Squid. This manages a Squid instance as an HA resource.",
+  "params": [
+    {
+      "name": "squid_exe",
+      "title": "Executable file",
+      "descripion": "This is a required parameter. This parameter specifies squid's executable file.",
+      "required": true,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "squid_conf",
+      "title": "Configuration file",
+      "descripion": "This is a required parameter. This parameter specifies a configuration file for a squid instance managed by this RA.",
+      "required": true,
+      "unique": true,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "squid_pidfile",
+      "title": "Pidfile",
+      "descripion": "This is a required parameter. This parameter specifies a process id file for a squid instance managed by this RA.",
+      "required": true,
+      "unique": true,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "squid_port",
+      "title": "Port number",
+      "descripion": "This is a required parameter. This parameter specifies a port number for a squid instance managed by this RA. If plural ports are used, you must specifiy the only one of them.",
+      "required": true,
+      "unique": true,
+      "content_type": "integer",
+      "default_value": ""
+    },
+    {
+      "name": "squid_stop_timeout",
+      "title": "how long to wait for squid shutdown to stop the instance before resorting to kill",
+      "descripion": "On stop, a squid shutdown is invoked first. If the resource doesn't stop within this timeout, we resort to stopping processes by sending signals and finally KILLing them.",
+      "required": false,
+      "unique": false,
+      "content_type": "integer",
+      "default_value": "10"
+    },
+    {
+      "name": "debug_mode",
+      "title": "Debug mode",
+      "descripion": "This is an optional parameter. This RA runs in debug mode when this parameter includes 'x' or 'v'. If 'x' is included, both of STDOUT and STDERR redirect to the logfile specified by \"debug_log\", and then the builtin shell option 'x' is turned on. It is similar about 'v'.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "debug_log",
+      "title": "A destination of the debug log",
+      "descripion": "This is an optional and omittable parameter. This parameter specifies a destination file for debug logs and works only if this RA run in debug mode.  Refer to \"debug_mode\" about debug mode. If no value is given but it's requied, it's made by the following rules: \"/var/log/\" as a directory part, the basename of the configuration file given by \"syslog_ng_conf\" as a basename part, \".log\" as a suffix.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "status",
+    "monitor",
+    "meta-data",
+    "validate-all"
+  ]
+}

@@ -1,0 +1,107 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "dhcpd",
+  "resource": "ocf:heartbeat:dhcpd",
+  "title": "Chrooted ISC DHCP server resource agent.",
+  "description": "Manage an ISC DHCP server service in a chroot environment.",
+  "params": [
+    {
+      "name": "config",
+      "title": "Configuration file",
+      "descripion": "The absolute path to the DHCP server configuration file.",
+      "required": true,
+      "unique": true,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "chrooted",
+      "title": "Enable chroot mode",
+      "descripion": "Configure the dhcpd service to run in a chrooted or non-chrooted  mode.",
+      "required": false,
+      "unique": true,
+      "content_type": "boolean",
+      "default_value": "true"
+    },
+    {
+      "name": "chrooted_path",
+      "title": "The chrooted path",
+      "descripion": "The absolute path of the chrooted DHCP environment.",
+      "required": false,
+      "unique": true,
+      "content_type": "string",
+      "default_value": "/var/lib/dhcp"
+    },
+    {
+      "name": "binary",
+      "title": "dhcpd binary",
+      "descripion": "The binary for the DHCP server process. An absolute path  definition is not required, but can be used to override  environment path.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "dhcpd"
+    },
+    {
+      "name": "user",
+      "title": "dhcpd owner",
+      "descripion": "The system user the DHCP server process will run as when  it is chrooted.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "dhcpd"
+    },
+    {
+      "name": "group",
+      "title": "dhcpd group owner",
+      "descripion": "The system group the DHCP server process will run as when  it is chrooted.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "nogroup"
+    },
+    {
+      "name": "interface",
+      "title": "Network Interface",
+      "descripion": "The network interface(s) the DHCP server process will  bind to. A blank value will bind the process to all  interfaces.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "includes",
+      "title": "Include files",
+      "descripion": "This parameter provides a means to copy include files  into the chrooted environment. If a dhcpd.conf file  contains a line similar to this:    include \"/etc/named.keys\";   Then an admin also has to tell the dhcpd RA that this  file should be pulled into the chrooted environment. This  is a space delimited list.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "leases",
+      "title": "Leases file",
+      "descripion": "The leases database file, relative to chrooted_path.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/db/dhcpd.leases"
+    },
+    {
+      "name": "pid",
+      "title": "PID file",
+      "descripion": "The path and filename of the PID file. It is relative  to chrooted_path.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/var/run/dhcpd.pid"
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "restart",
+    "monitor",
+    "meta-data",
+    "validate-all"
+  ]
+}

@@ -1,0 +1,179 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "mysql-proxy",
+  "resource": "ocf:heartbeat:mysql-proxy",
+  "title": "Manages a MySQL Proxy instance",
+  "description": "This script manages MySQL Proxy as an OCF resource in a high-availability setup.  The default monitor operation will verify that mysql-proxy is running.  The level 10 monitor operation is left out intentionally for possible future enhancements in conjunction with the admin plugin.  The level 20 monitor operation will perform a SELECT on a given table to verify that the connection to a back-end server is actually working.  Tested with MySQL Proxy 0.8.1 and 0.8.3 on Debian 6.0.",
+  "params": [
+    {
+      "name": "binary",
+      "title": "Full path to MySQL Proxy binary",
+      "descripion": "Full path to the MySQL Proxy binary. For example, \"/usr/sbin/mysql-proxy\".",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "/usr/sbin/mysql-proxy"
+    },
+    {
+      "name": "client_binary",
+      "title": "MySQL client binary",
+      "descripion": "Location of the MySQL client binary.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "mysql"
+    },
+    {
+      "name": "defaults_file",
+      "title": "Full path to configuration file",
+      "descripion": "Full path to a MySQL Proxy configuration file. For example, \"/etc/mysql-proxy.conf\".",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "proxy_backend_addresses",
+      "title": "MySQL Proxy back-end servers",
+      "descripion": "Address:port of the remote back-end servers (default: 127.0.0.1:3306).",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "127.0.0.1:3306"
+    },
+    {
+      "name": "proxy_read_only_backend_addresses",
+      "title": "MySql Proxy read only back-end servers",
+      "descripion": "Address:port of the remote (read only) slave-server (default: ).",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "127.0.0.1:3306"
+    },
+    {
+      "name": "proxy_address",
+      "title": "MySQL Proxy listening address",
+      "descripion": "Listening address:port of the proxy server (default: :4040). You can also specify a socket like \"/tmp/mysql-proxy.sock\".",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ":4040"
+    },
+    {
+      "name": "log_level",
+      "title": "MySQL Proxy log level.",
+      "descripion": "Log all messages of level (error|warning|info|message|debug|) or higher. An empty value disables logging.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "keepalive",
+      "title": "Use keepalive option",
+      "descripion": "Try to restart the proxy if it crashed (default: ). Valid values: true or false. An empty value equals \"false\".",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "plugins",
+      "title": "MySQL Proxy plugins",
+      "descripion": "Whitespace separated list of plugins to load (default: ). Note: The admin plugin will be auto-loaded in case you specify an admin_* parameter.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "admin_address",
+      "title": "MySQL Proxy admin plugin listening address",
+      "descripion": "Listening address:port of the admin plugin (default: 127.0.0.1:4041). Note: The admin plugin will be auto-loaded in case you specify an admin_* parameter.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "127.0.0.1:4041"
+    },
+    {
+      "name": "admin_username",
+      "title": "MySQL Proxy admin plugin username",
+      "descripion": "Username for the admin plugin (default: ). Required since MySQL Proxy 0.8.1, if the admin plugin is loaded. Note: The admin plugin will be auto-loaded in case you specify an admin_* parameter.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "admin_password",
+      "title": "MySQL Proxy admin plugin password",
+      "descripion": "Password for the admin plugin (default: ). Required since MySQL Proxy 0.8.1, if the admin plugin is loaded. Note: The admin plugin will be auto-loaded in case you specify an admin_* parameter.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "admin_lua_script",
+      "title": "MySQL Proxy admin plugin lua script",
+      "descripion": "Script to execute by the admin plugin. Required since MySQL Proxy 0.8.1, if the admin plugin is loaded. Note: The admin plugin will be auto-loaded in case you specify an admin_* parameter.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "test_table",
+      "title": "MySQL test table",
+      "descripion": "Table to be tested in monitor statement (in database.table notation)",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "mysql.user"
+    },
+    {
+      "name": "test_user",
+      "title": "MySQL test user",
+      "descripion": "MySQL test user",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "test_passwd",
+      "title": "MySQL test user password",
+      "descripion": "MySQL test user password",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "parameters",
+      "title": "MySQL Proxy additional parameters",
+      "descripion": "The MySQL Proxy daemon may be called with additional parameters. Specify any of them here.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": ""
+    },
+    {
+      "name": "pidfile",
+      "title": "PID file",
+      "descripion": "PID file",
+      "required": false,
+      "unique": true,
+      "content_type": "string",
+      "default_value": "/var/run/resource-agents/mysql-proxy-RESOURCE_ID.pid"
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "reload",
+    "monitor",
+    "validate-all",
+    "meta-data"
+  ]
+}

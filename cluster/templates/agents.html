@@ -2,4 +2,16 @@
 
 {% block title %}Agents{% endblock %}
 {% block content %}
+    <ul>
+    {% if agents %}
+        {% for agent in agents %}
+            <li> agent: {{ agent.name }}</li>
+            {% for param  in agent_params %}
+                {% if param.agent == agent %}
+                    <li style="margin-left:5em"> {{ param.name }} </li>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    </ul>
 {% endblock %}

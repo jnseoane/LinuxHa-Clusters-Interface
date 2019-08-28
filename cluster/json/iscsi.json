@@ -1,0 +1,72 @@
+['/tmp/extract_ocf_info.py']
+{
+  "name": "iscsi",
+  "resource": "ocf:heartbeat:iscsi",
+  "title": "Manages a local iSCSI initiator and its connections to iSCSI targets",
+  "description": "OCF Resource Agent for iSCSI. Add (start) or remove (stop) iSCSI targets.",
+  "params": [
+    {
+      "name": "portal",
+      "title": "Portal address",
+      "descripion": "The iSCSI portal address in the form: {ip_address|hostname}[\":\"port]",
+      "required": true,
+      "unique": false,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "target",
+      "title": "Target IQN",
+      "descripion": "The iSCSI target IQN.",
+      "required": true,
+      "unique": true,
+      "content_type": "string",
+      "default_value": null
+    },
+    {
+      "name": "discovery_type",
+      "title": "Target discovery type",
+      "descripion": "Target discovery type. Check the open-iscsi documentation for supported discovery types.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "sendtargets"
+    },
+    {
+      "name": "iscsiadm",
+      "title": "iscsiadm binary",
+      "descripion": "open-iscsi administration utility binary.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "iscsiadm"
+    },
+    {
+      "name": "udev",
+      "title": "udev",
+      "descripion": "If the next resource depends on the udev creating a device then we wait until it is finished. On a normally loaded host this should be done quickly, but you may be unlucky. If you are not using udev set this to \"no\", otherwise we will spin in a loop until a timeout occurs.",
+      "required": false,
+      "unique": false,
+      "content_type": "string",
+      "default_value": "yes"
+    },
+    {
+      "name": "try_recovery",
+      "title": "On error wait for iSCSI recovery in monitor",
+      "descripion": "If the iSCSI session exists but is currently inactive/broken, which is most probably due to network problems, the iSCSI layer will try to recover. If this parameter is set to true, we'll wait for the recovery to succeed. In that case the monitor operation can only time out so you should set the monitor op timeout attribute appropriately.",
+      "required": false,
+      "unique": false,
+      "content_type": "boolean",
+      "default_value": "false"
+    }
+  ],
+  "actions": [
+    "start",
+    "stop",
+    "status",
+    "monitor",
+    "validate-all",
+    "methods",
+    "meta-data"
+  ]
+}
