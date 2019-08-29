@@ -5,7 +5,7 @@
     <ul>
     {% if nodes %}
         {% for node in nodes %}
-        <li> node: {{ node.name }} id: {{ node.id }} status: {{ node.status }} maintenance: {{ node.maintenance }}</li>
+        <li> node: {{ node.name }} id: {{ node.id }} status: {{ node.status }} maintenance: {{ node.maintenance }}   {% if node.status == "online" %}<a href="nodes/{{ node.name }}/standby">Standby</a> {% else %}<a href="nodes/{{ node.name }}/online">Online</a>{% endif %}   {% if node.maintenance == True %}<a href="nodes/{{ node.name }}/ready">Ready</a> {% else %}<a href="nodes/{{ node.name }}/maintenance">Maintenance</a>{% endif %}</li>
         {% endfor %}
     {% endif %}
     </ul>
