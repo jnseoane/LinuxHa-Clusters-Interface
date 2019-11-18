@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}New Resource{% endblock %}
+{% block content %}
+    {% if agents %}
+        Agents:
+        <ul>
+        {% for agent in agents %}
+             <a href="new/{{ agent.name }}"><li>{{ agent.name }}</li></a>
+        {% endfor %}
+        </ul>
+    {% else %}
+        No hay agentes disponibles por el momento
+    {% endif %}
+{% endblock %}

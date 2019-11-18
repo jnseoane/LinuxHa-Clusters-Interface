@@ -13,6 +13,9 @@ def index(request):
     context = {}
     return HttpResponse(template.render(context,request))
 
+
+##### NODES
+
 def nodes(request):
     template = loader.get_template('nodes.html')
     #Conseguimos la información de los nodos para enviarla a la vista
@@ -47,7 +50,6 @@ def nodes(request):
 
     return HttpResponse(template.render(context, request))
 
-
 def nodes_online(request, node_name):
     subprocess.run(["crm", "node", "online", node_name], stdout=subprocess.PIPE)
     return redirect('nodes')
@@ -64,13 +66,40 @@ def nodes_ready(request, node_name):
     subprocess.run(["crm", "node", "ready", node_name], stdout=subprocess.PIPE)
     return redirect('nodes')
 
+
+
+
+##### RESOURCES
+
 def resources(request):
+    template = loader.get_template('resources.html')
     context = {}
-    return render(request, 'resources.html', context)
+    return HttpResponse(template.render(context, request))
 
-def node_resources(request, node_id):
-    return HttpResponse("Resources of node: %s" % node_id)
+def resources_new(request):
+    template = loader.get_template('resources_new.html')
 
+    agents = Agent.objects.all()
+    context = {
+        'agents': agents,
+    }
+
+    return HttpResponse(template.render(context, request))
+
+def resources_form(request, resource_name):
+    template = loader.get_template('resources.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
+
+def resources_details(request):
+    template = loader.get_template('resources_form.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
+
+
+
+
+##### AGENTS
 
 def agents(request):
     template = loader.get_template('agents.html')
@@ -100,7 +129,6 @@ def agents_refresh(request):
     }
     return redirect('agents')
     #return HttpResponse(template.render(context, request))
-
 
 def agent_details(request, agent_name):
     return redirect('agents')

@@ -10,8 +10,11 @@ urlpatterns = [
     path('nodes/<node_name>/maintenance', views.nodes_maintenance, name='nodes_maintenance'),
     path('nodes/<node_name>/ready', views.nodes_ready, name='nodes_ready'),
     path('resources', views.resources, name='resources'),
-    path('nodes/<int:node_id>/resources', views.node_resources, name='node-resources'),
+    path('resources/new', views.resources_new, name='resources_new'),
+    path('resources/new/<resource_name>', views.resources_form, name='resources_form'),
+    path('resources/details', views.resources_details, name='resources_details'),
     path('agents', views.agents, name='agents'),
     path('agents/<agent_name>/details', views.agent_details, name='agent_details'),
     path('refresh', views.agents_refresh, name='refresh'),
+
 ]
