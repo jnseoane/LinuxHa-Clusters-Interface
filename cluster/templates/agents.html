@@ -2,11 +2,11 @@
 
 {% block title %}Agents{% endblock %}
 {% block content %}
-    <a href="{% url 'refresh' %}">Actualizar</a>
+    <a href="{% url 'cluster:refresh' %}">Actualizar</a>
     {% if agents %}
         {% for agent in agents %}
             <details>
-                <summary>agent: {{ agent.name }}         <a href="agents/{{ agent.name }}/details">Details</a></summary>
+                <summary>agent: {{ agent.name }}         <a href="{% url 'cluster:agent_details' agent.name %}">Details</a></summary>
                 <p>{% for param  in agent_params %}
                     {% if param.agent == agent %}
                         <li style="margin-left:5em"> {{ param.name }} </li>

@@ -3,7 +3,7 @@
 {% block title %}Resources{% endblock %}
 {% block content %}
     <ul>
-        <a href="resources/new"><li> New Resource</li></a>
-        <a href="resources/details"><li> Resources Management</li></a>
+        <a href="{% url 'cluster:resources_new' %}"><li> New Resource</li></a>
+        <a href="{% url 'cluster:resources_details' %}"><li> Resources Management</li></a>
     </ul>
 {% endblock %}

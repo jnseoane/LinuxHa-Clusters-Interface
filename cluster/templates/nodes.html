@@ -5,7 +5,7 @@
     <ul>
     {% if nodes %}
         {% for node in nodes %}
-        <li> node: {{ node.name }} id: {{ node.id }} status: {{ node.status }} maintenance: {{ node.maintenance }}   {% if node.status == "online" %}<a href="nodes/{{ node.name }}/standby">Standby</a> {% else %}<a href="nodes/{{ node.name }}/online">Online</a>{% endif %}   {% if node.maintenance == True %}<a href="nodes/{{ node.name }}/ready">Ready</a> {% else %}<a href="nodes/{{ node.name }}/maintenance">Maintenance</a>{% endif %}</li>
+        <li> node: {{ node.name }} id: {{ node.id }} status: {{ node.status }} maintenance: {{ node.maintenance }}   {% if node.status == "online" %}<a href= "{% url 'cluster:nodes_standby' node.name %}" >Standby</a> {% else %}<a href="{% url 'cluster:nodes_online' node.name %}">Online</a>{% endif %}   {% if node.maintenance == True %}<a href="{% url 'cluster:nodes_ready' node.name %}">Ready</a> {% else %}<a href="{% url 'cluster:nodes_maintenance' node.name %}">Maintenance</a>{% endif %}</li>
         {% endfor %}
     {% endif %}
     </ul>

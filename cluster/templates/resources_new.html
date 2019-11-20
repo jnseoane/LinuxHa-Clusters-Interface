@@ -6,7 +6,7 @@
         Agents:
         <ul>
         {% for agent in agents %}
-             <a href="new/{{ agent.name }}"><li>{{ agent.name }}</li></a>
+             <a href="{% url 'cluster:resources_form' agent.name %}"><li>{{ agent.name }}</li></a>
         {% endfor %}
         </ul>
     {% else %}

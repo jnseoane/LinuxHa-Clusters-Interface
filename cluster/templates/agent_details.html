@@ -1,6 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Agent{% endblock %}
+{% block title %}Agent Details{% endblock %}
 {% block content %}
+    <b>Name:</b> {{ agent.name }}<br>
+    <b>Title:</b> {{ agent.title }}<br>
+    <b>Resource String:</b> {{ agent.resource_str }}<br>
+    <b>Description:</b> {{ agent.description }}<br>
 
+    <b>Params</b><br>
+{% if params %}
+        <ul>
+        {% for param in params %}
+            <li>{{ param.name }}  required: {{ param.required }}. Type: {{ param.content_type }}. Default: {{ param.default_value }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        No hay agentes disponibles por el momento
+    {% endif %}
 {% endblock %}

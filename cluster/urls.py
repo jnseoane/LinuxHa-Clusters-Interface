@@ -2,6 +2,7 @@ from django.urls import path
 
 from . import views
 
+app_name = 'cluster'
 urlpatterns = [
     path('', views.index, name='index'),
     path('nodes', views.nodes, name='nodes'),
@@ -11,7 +12,8 @@ urlpatterns = [
     path('nodes/<node_name>/ready', views.nodes_ready, name='nodes_ready'),
     path('resources', views.resources, name='resources'),
     path('resources/new', views.resources_new, name='resources_new'),
-    path('resources/new/<resource_name>', views.resources_form, name='resources_form'),
+    path('resources/new/<agent_name>', views.resources_form, name='resources_form'),
+    path('resources/new/<agent_name>/created', views.resources_created, name='resources_created'),
     path('resources/details', views.resources_details, name='resources_details'),
     path('agents', views.agents, name='agents'),
     path('agents/<agent_name>/details', views.agent_details, name='agent_details'),

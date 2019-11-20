@@ -52,19 +52,19 @@ def nodes(request):
 
 def nodes_online(request, node_name):
     subprocess.run(["crm", "node", "online", node_name], stdout=subprocess.PIPE)
-    return redirect('nodes')
+    return redirect('cluster:nodes')
 
 def nodes_standby(request, node_name):
     subprocess.run(["crm", "node", "standby", node_name], stdout=subprocess.PIPE)
-    return redirect('nodes')
+    return redirect('cluster:nodes')
 
 def nodes_maintenance(request, node_name):
     subprocess.run(["crm", "node", "maintenance", node_name], stdout=subprocess.PIPE)
-    return redirect('nodes')
+    return redirect('cluster:nodes')
 
 def nodes_ready(request, node_name):
     subprocess.run(["crm", "node", "ready", node_name], stdout=subprocess.PIPE)
-    return redirect('nodes')
+    return redirect('cluster:nodes')
 
 
 
@@ -80,16 +80,24 @@ def resources_new(request):
     template = loader.get_template('resources_new.html')
 
     agents = Agent.objects.all()
+
     context = {
         'agents': agents,
     }
-
     return HttpResponse(template.render(context, request))
 
-def resources_form(request, resource_name):
-    template = loader.get_template('resources.html')
-    context = {}
+def resources_form(request, agent_name):
+    template = loader.get_template('resources_form.html')
+
+    params = Agent_Param.objects.all().filter(agent__name=agent_name)
+
+    context = {
+        'params': params,
+    }
     return HttpResponse(template.render(context, request))
+
+def resources_created(request, agent_name):
+    return redirect('cluster:resources')
 
 def resources_details(request):
     template = loader.get_template('resources_form.html')
@@ -127,11 +135,21 @@ def agents_refresh(request):
         'agents': agents,
         'agent_params': params
     }
-    return redirect('agents')
+    return redirect('cluster:agents')
     #return HttpResponse(template.render(context, request))
 
 def agent_details(request, agent_name):
-    return redirect('agents')
+    template = loader.get_template('agent_details.html')
+
+    agent = Agent.objects.get(name=agent_name)
+    params = Agent_Param.objects.all().filter(agent__name= agent_name)
+
+    context = {
+        'agent': agent,
+        'params': params,
+    }
+    return HttpResponse(template.render(context, request))
+    #return redirect('cluster:agents')
 
 def ra_json_refresh():
     agents_db = Agent.objects.all()
