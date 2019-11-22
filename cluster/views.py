@@ -92,18 +92,45 @@ def resources_form(request, agent_name):
     params = Agent_Param.objects.all().filter(agent__name=agent_name)
 
     context = {
+        'agent_name': agent_name,
         'params': params,
     }
     return HttpResponse(template.render(context, request))
 
 def resources_created(request, agent_name):
-    return redirect('cluster:resources')
+    template = loader.get_template('resources_sucessful.html')
 
-def resources_details(request):
-    template = loader.get_template('resources_form.html')
-    context = {}
+    # Se crea un diccionario para la entrada de datos del formulario y se guardan todos, si no viene ningun valor se pone None por defecto
+    input = dict()
+    params = Agent_Param.objects.all().filter(agent__name=agent_name)
+    for param in params:
+        input[param.name] = request.POST.get(param.name, None)
+
+    #Eliminar los campos con Nones
+
+
+    #Ahora es necesario crear el recurso mediante crmsh. Comandos
+    # crm configure primitive <nombre> ocf:heartbeat:pacemaker:<ra_name> params <name_param>=<value_param>
+
+
+    #Enviar a pantalla de confirmación
+    context = {
+        'input' : input,
+    }
     return HttpResponse(template.render(context, request))
 
+def resources_details(request):
+    template = loader.get_template('resources_details.html')
+
+    #Obtener el estado de los recursos y el nodo el que se están ejecutando
+
+
+
+    #Enviar la informacion a la plantilla
+    context = {
+        'resources': resources,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 

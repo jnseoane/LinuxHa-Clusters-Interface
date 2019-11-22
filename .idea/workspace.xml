@@ -22,12 +22,20 @@
     <expand />
     <select />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1Q19JIXNW1ImmHEumfoZnYCow1t" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
@@ -58,6 +66,9 @@
       <workItem from="1574245600214" duration="66000" />
       <workItem from="1574245727148" duration="2129000" />
       <workItem from="1574248396814" duration="4363000" />
+      <workItem from="1574419788963" duration="144000" />
+      <workItem from="1574420013797" duration="703000" />
+      <workItem from="1574420794968" duration="2154000" />
     </task>
     <servers />
   </component>
