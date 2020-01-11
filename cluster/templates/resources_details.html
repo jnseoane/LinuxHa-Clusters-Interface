@@ -4,7 +4,7 @@
 {% block content %}
     {% if resources %}
         {% for resource in resources %}
-             <li>{{ resource.nombre }} Status: {{ resource.status }}  STR: {{ resource.str }}. #####Botones migrar, parar, etc.</li><br>
+             <li>Name: {{ resource.nombre }}. Status: {{ resource.status }}.  STR: {{ resource.str }}. {% if "Stopped" in resource.status %}<a href="{% url 'cluster:resources_delete' resource.nombre %}">Delete</a>{% else %}<a href="{% url 'cluster:resources_stop' resource.nombre %}">Stop</a>{% endif %}</li><br>
         {% endfor %}
     {% else %}
         No hay recursos por el momento

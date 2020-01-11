@@ -141,18 +141,31 @@ def resources_details(request):
     #Obtener el estado de los recursos y el nodo el que se están ejecutando
     out = subprocess.check_output(["crm", "resource", "show"])
     info = out.decode('ascii')
-    result = info.split("\n")
-    for item in result:
-        if item != "":
-            lista = item.split("\t")
-            resources.append({"nombre": lista[0], "str": lista[1], "status": lista[2]})
+    if "NO resources configured" not in info:
+        result = info.split("\n")
+        for item in result:
+            if item != "":
+                lista = item.split("\t")
+                resources.append({"nombre": lista[0], "str": lista[1][:-1], "status": lista[2]})
+            # Enviar la informacion a la plantilla
+            context = {
+                'resources': resources,
+            }
+    else:
+        # Enviar la informacion a la plantilla
+        context = {
+        }
 
-    #Enviar la informacion a la plantilla
-    context = {
-        'resources': resources,
-    }
+
     return HttpResponse(template.render(context, request))
 
+def resources_stop(request, resource_name):
+    subprocess.run(["crm", "resource", "stop", resource_name[1:]], stdout=subprocess.PIPE)
+    return redirect('cluster:resources')
+
+def resources_delete(request, resource_name):
+    subprocess.run(["crm", "configure", "delete", resource_name[1:]], stdout=subprocess.PIPE)
+    return redirect('cluster:resources')
 
 
 ##### AGENTS
