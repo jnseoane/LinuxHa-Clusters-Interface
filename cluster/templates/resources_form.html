@@ -4,7 +4,7 @@
 {% block content %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
     <div class="container">
-        <div class="tm-title">Resources</div>
+        <div class="tm-title">New Resource</div>
     <form action="{% url 'cluster:resources_created' agent_name %}" method="post">
     {% csrf_token %}
         <label class="tm-nav-item-custom" for="name">Nombre recurso</label>

@@ -2,20 +2,17 @@
 
 {% block title %}Agents{% endblock %}
 {% block content %}
-    <a href="{% url 'cluster:refresh' %}">Actualizar</a>
-    {% if agents %}
-        {% for agent in agents %}
-            <details>
-                <summary>agent: {{ agent.name }}         <a href="{% url 'cluster:agent_details' agent.name %}">Details</a></summary>
-                <p>{% for param  in agent_params %}
-                    {% if param.agent == agent %}
-                        <li style="margin-left:5em"> {{ param.name }} </li>
-                    {% endif %}
-                {% endfor %}
-                </p>
-            </details>
-        {% endfor %}
-    {% else %}
-        No hay agentes disponibles por el momento
-    {% endif %}
+    <div class="container">
+        <div class="tm-title">Agents</div>
+        <a class="tm-button" href="{% url 'cluster:refresh' %}">Actualizar</a><br>
+
+        {% if agents %}
+             <ul class="tm-main-nav-ul-margin">
+            {% for agent in agents %}
+                <a href="{% url 'cluster:agent_details' agent.name %}" class="tm-nav-item-custom"><li>{{ agent.name }}</li></a>
+            {% endfor %}
+             </ul>
+        {% else %}
+            <li class="tm-nav-item-custom"><b>No hay agentes en este momento. Prueba a actualizar</b></li>
+        {% endif %}
 {% endblock %}

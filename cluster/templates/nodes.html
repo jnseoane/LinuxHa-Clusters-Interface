@@ -10,6 +10,8 @@
                 <li class="tm-nav-item-custom"> <b> Node:</b> {{ node.name }}  <b>Id:</b> {{ node.id }}    <b>Status:</b> {{ node.status }}    <b>Maintenance:</b> {{ node.maintenance }}   {% if node.status == "online" %}<a href= "{% url 'cluster:nodes_standby' node.name %}" class="tm-button" >Standby</a> {% else %}<a href="{% url 'cluster:nodes_online' node.name %}" class="tm-button">Online</a>{% endif %}   {% if node.maintenance == True %}<a href="{% url 'cluster:nodes_ready' node.name %}" class="tm-button">Ready</a> {% else %}<a href="{% url 'cluster:nodes_maintenance' node.name %}" class="tm-button">Maintenance</a>{% endif %}</li>
             {% endfor %}
             </ul>
+        {% else %}
+            <li class="tm-nav-item-custom"><b>No hay nodos en este momento</b></li>
         {% endif %}
     </div>
 {% endblock %}

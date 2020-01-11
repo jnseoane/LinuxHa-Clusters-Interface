@@ -2,19 +2,23 @@
 
 {% block title %}Agent Details{% endblock %}
 {% block content %}
-    <b>Name:</b> {{ agent.name }}<br>
-    <b>Title:</b> {{ agent.title }}<br>
-    <b>Resource String:</b> {{ agent.resource_str }}<br>
-    <b>Description:</b> {{ agent.description }}<br>
+    <div class="container">
+        <div class="tm-title">{{ agent.name }}</div>
 
-    <b>Params</b><br>
-{% if params %}
-        <ul>
-        {% for param in params %}
-            <li>{{ param.name }}  required: {{ param.required }}. Type: {{ param.content_type }}. Default: {{ param.default_value }}</li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        No hay agentes disponibles por el momento
-    {% endif %}
+        <label class="tm-nav-item-custom"><b>Name:</b></label> <input type="text" value="{{ agent.name }}" readonly><br>
+        <label class="tm-nav-item-custom">Title:</label> </b> {{ agent.title }}<br>
+        <label class="tm-nav-item-custom">Resource String:</label> </b> {{ agent.resource_str }}<br>
+        <label class="tm-nav-item-custom">Description:</label> </b> {{ agent.description }}<br>
+
+        <b>Params</b><br>
+            {% if params %}
+                <ul>
+                {% for param in params %}
+                    <li>{{ param.name }}  required: {{ param.required }}. Type: {{ param.content_type }}. Default: {{ param.default_value }}</li>
+                {% endfor %}
+                </ul>
+            {% else %}
+                No hay agentes disponibles por el momento
+            {% endif %}
+    </div>
 {% endblock %}
