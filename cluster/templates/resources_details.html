@@ -4,7 +4,7 @@
 {% block content %}
     {% if resources %}
         {% for resource in resources %}
-             <li>{{ resource.name }} running in {{ resource.owner }}. Status: {{ resource.status }}. #####Botones migrar, parar, etc.</li><br>
+             <li>{{ resource.nombre }} Status: {{ resource.status }}  STR: {{ resource.str }}. #####Botones migrar, parar, etc.</li><br>
         {% endfor %}
     {% else %}
         No hay recursos por el momento

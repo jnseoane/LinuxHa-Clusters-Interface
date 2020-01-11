@@ -2,14 +2,5 @@
 
 {% block title %}Resource Sucessful{% endblock %}
 {% block content %}
-    {% if input %}
-        Agents:
-        <ul>
-        {% for name, value in input.items %}
-             <li>{{ name }}: {{ value }}</li></a>
-        {% endfor %}
-        </ul>
-    {% else %}
-        No hay agentes disponibles por el momento
-    {% endif %}
+    <li> {{msg}}</li>
 {% endblock %}

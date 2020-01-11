@@ -104,27 +104,48 @@ def resources_created(request, agent_name):
     input = dict()
     params = Agent_Param.objects.all().filter(agent__name=agent_name)
     for param in params:
-        input[param.name] = request.POST.get(param.name, None)
-
-    #Eliminar los campos con Nones
-
+        aux = request.POST.get(param.name, None)
+        # Eliminar los campos con Nones
+        if aux is not None and aux != '':
+            input[param.name] = aux
 
     #Ahora es necesario crear el recurso mediante crmsh. Comandos
     # crm configure primitive <nombre> ocf:heartbeat:pacemaker:<ra_name> params <name_param>=<value_param>
+    nombre = request.POST.get("nombre", None)
+    agent = Agent.objects.all().filter(name=agent_name)
+    for ag in agent:
+        agent = ag
+    auxstr = "crm configure primitive " + nombre  + " " +  agent.resource_str
 
+    if len(input) > 0:
+        auxstr+= " params"
 
+    for key, value in input.items():
+        auxstr +=" " + key + "=" + value
+
+    return_code = subprocess.call(auxstr, stdin=subprocess.PIPE,  stdout=subprocess.PIPE, shell=True)
+    if return_code != 0:
+        msg = "El recurso no se ha creado correctamente, compruebe que ya exista con ese nombre o haya algún parametro incorrecto o que falte por añadir."
+    else:
+        msg = "El recurso se ha creado correctamente."
     #Enviar a pantalla de confirmación
     context = {
-        'input' : input,
+        'msg' : msg,
     }
     return HttpResponse(template.render(context, request))
 
 def resources_details(request):
     template = loader.get_template('resources_details.html')
 
+    resources =[]
     #Obtener el estado de los recursos y el nodo el que se están ejecutando
-
-
+    out = subprocess.check_output(["crm", "resource", "show"])
+    info = out.decode('ascii')
+    result = info.split("\n")
+    for item in result:
+        if item != "":
+            lista = item.split("\t")
+            resources.append({"nombre": lista[0], "str": lista[1], "status": lista[2]})
 
     #Enviar la informacion a la plantilla
     context = {

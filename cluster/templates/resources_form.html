@@ -6,6 +6,8 @@
 
     <form action="{% url 'cluster:resources_created' agent_name %}" method="post">
     {% csrf_token %}
+        <label for="name">Nombre recurso</label>
+        <input type="text" name="nombre" id="nombre"><br>
     {% for param in params %}
         <label for="param_name">{{ param.name }}</label>
         <input {% if param.content_type == 'boolean' %}type="checkbox"{% elif param.content_type == 'integer' %}type="number"{% elif param.content_type == 'string' %}type="text"{% endif %} name={{ param.name }} id={{ param.name }}{% if param.default_value == 'true' %} checked{% endif %}><br>
