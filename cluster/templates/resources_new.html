@@ -3,11 +3,11 @@
 {% block title %}New Resource{% endblock %}
 {% block content %}
     {% if agents %}
-        Agents:
-        <ul>
-        {% for agent in agents %}
-             <a href="{% url 'cluster:resources_form' agent.name %}"><li>{{ agent.name }}</li></a>
-        {% endfor %}
+        <div class="tm-title">Agents</div>
+        <ul class="tm-main-nav-ul-margin">
+            {% for agent in agents %}
+                 <a href="{% url 'cluster:resources_form' agent.name %}" class="tm-nav-agent"><li>{{ agent.name }}</li></a>
+            {% endfor %}
         </ul>
     {% else %}
         No hay agentes disponibles por el momento

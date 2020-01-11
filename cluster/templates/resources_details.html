@@ -2,11 +2,15 @@
 
 {% block title %}Resource Sucessful{% endblock %}
 {% block content %}
-    {% if resources %}
-        {% for resource in resources %}
-             <li>Name: {{ resource.nombre }}. Status: {{ resource.status }}.  STR: {{ resource.str }}. {% if "Stopped" in resource.status %}<a href="{% url 'cluster:resources_delete' resource.nombre %}">Delete</a>{% else %}<a href="{% url 'cluster:resources_stop' resource.nombre %}">Stop</a>{% endif %}</li><br>
-        {% endfor %}
-    {% else %}
-        No hay recursos por el momento
-    {% endif %}
+    <div class="container">
+        <div class="tm-title">Resources Management</div>
+        {% if resources %}
+            <ul class="tm-main-nav-ul">
+                {% for resource in resources %}
+                     <li class="tm-nav-item-custom"><b>Name: </b>{{ resource.nombre }}  <b>Status: </b>{{ resource.status }}  <b>String: </b>{{ resource.str }} {% if "Stopped" in resource.status %}<a href="{% url 'cluster:resources_delete' resource.nombre %}" class="tm-button">Delete</a>{% else %}<a href="{% url 'cluster:resources_stop' resource.nombre %}" class="tm-button">Stop</a>{% endif %}</li><br>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <li class="tm-nav-item-custom"><b>No hay recursos en este momento</b></li>
+        {% endif %}
 {% endblock %}
