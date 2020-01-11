@@ -2,11 +2,13 @@
 
 {% block title %}Nodes{% endblock %}
 {% block content %}
-    <ul>
-    {% if nodes %}
-        {% for node in nodes %}
-        <li> node: {{ node.name }} id: {{ node.id }} status: {{ node.status }} maintenance: {{ node.maintenance }}   {% if node.status == "online" %}<a href= "{% url 'cluster:nodes_standby' node.name %}" >Standby</a> {% else %}<a href="{% url 'cluster:nodes_online' node.name %}">Online</a>{% endif %}   {% if node.maintenance == True %}<a href="{% url 'cluster:nodes_ready' node.name %}">Ready</a> {% else %}<a href="{% url 'cluster:nodes_maintenance' node.name %}">Maintenance</a>{% endif %}</li>
-        {% endfor %}
-    {% endif %}
-    </ul>
+    <div class="container">
+        <div class="tm-title">Nodes</div>
+        {% if nodes %}
+            {% for node in nodes %}
+                <ul class="tm-main-nav-ul">
+                <li class="tm-nav-item-custom"> <b> Node:</b> {{ node.name }}  <b>Id:</b> {{ node.id }}    <b>Status:</b> {{ node.status }}    <b>Maintenance:</b> {{ node.maintenance }}   {% if node.status == "online" %}<a href= "{% url 'cluster:nodes_standby' node.name %}" class="tm-button" >Standby</a> {% else %}<a href="{% url 'cluster:nodes_online' node.name %}" class="tm-button">Online</a>{% endif %}   {% if node.maintenance == True %}<a href="{% url 'cluster:nodes_ready' node.name %}" class="tm-button">Ready</a> {% else %}<a href="{% url 'cluster:nodes_maintenance' node.name %}" class="tm-button">Maintenance</a>{% endif %}</li>
+            {% endfor %}
+        {% endif %}
+    </div>
 {% endblock %}
