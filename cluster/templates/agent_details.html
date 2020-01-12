@@ -3,18 +3,17 @@
 {% block title %}Agent Details{% endblock %}
 {% block content %}
     <div class="container">
-        <div class="tm-title">{{ agent.name }}</div>
+        <div class="tm-title"> {{ agent.name }}</div>
 
-        <label class="tm-nav-item-custom"><b>Name:</b></label> <input type="text" value="{{ agent.name }}" readonly><br>
-        <label class="tm-nav-item-custom">Title:</label> </b> {{ agent.title }}<br>
-        <label class="tm-nav-item-custom">Resource String:</label> </b> {{ agent.resource_str }}<br>
-        <label class="tm-nav-item-custom">Description:</label> </b> {{ agent.description }}<br>
-
-        <b>Params</b><br>
+        <label class="tm-nav-item-custom">Name:</label> <input type="text" value="{{ agent.name }}" readonly><br>
+        <label class="tm-nav-item-custom">Title:</label><input type="text" value="{{ agent.title }}" readonly><br>
+        <label class="tm-nav-item-custom">Resource String:</label><input type="text" value="{{ agent.resource_str }}" readonly><br>
+        <label class="tm-nav-item-custom">Description:</label><br><textarea cols="70" rows="10" readonly>{{ agent.description }}</textarea><br>
+        <label class="tm-nav-item-custom">Params:</label><br>
             {% if params %}
                 <ul>
                 {% for param in params %}
-                    <li>{{ param.name }}  required: {{ param.required }}. Type: {{ param.content_type }}. Default: {{ param.default_value }}</li>
+                    <li class="custom"><b>{{ param.name }}.</b>  Required:{{ param.required }}. Type: {{ param.content_type }}. Default: {{ param.default_value }}</li>
                 {% endfor %}
                 </ul>
             {% else %}

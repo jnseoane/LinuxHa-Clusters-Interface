@@ -7,7 +7,7 @@
         <div class="tm-title">New Resource</div>
     <form action="{% url 'cluster:resources_created' agent_name %}" method="post">
     {% csrf_token %}
-        <label class="tm-nav-item-custom" for="name">Nombre recurso</label>
+        <label class="tm-nav-item-custom" for="name"><b>Nombre recurso</b></label>
         <input type="text" name="nombre" id="nombre" required><br>
     {% for param in params %}
         <label class="tm-nav-item-custom" for="param_name">{{ param.name }}</label>

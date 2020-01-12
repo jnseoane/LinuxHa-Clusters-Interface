@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Resource Sucessful{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="tm-title">Resource Migration</div>
+        <li class="tm-nav-item-custom">Actualmente ejecutandose en: <b>{{ msg }}</b></li>
+        <li class="tm-nav-item-custom">Migrar a:
+    {% if nodes %}
+        {% for node in nodes %}
+            {% ifnotequal node  msg %}
+                <a href="{% url 'cluster:resources_migration' resource node %}" class="tm-button">{{ node }}</a>
+            {% endifnotequal %}
+        {% endfor %}
+    {% endif %}
+    </li>
+
+    </div>
+{% endblock %}

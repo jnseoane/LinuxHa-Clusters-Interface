@@ -163,9 +163,49 @@ def resources_stop(request, resource_name):
     subprocess.run(["crm", "resource", "stop", resource_name[1:]], stdout=subprocess.PIPE)
     return redirect('cluster:resources')
 
+def resources_start(request, resource_name):
+    subprocess.run(["crm", "resource", "start", resource_name[1:]], stdout=subprocess.PIPE)
+    return redirect('cluster:resources')
+
 def resources_delete(request, resource_name):
     subprocess.run(["crm", "configure", "delete", resource_name[1:]], stdout=subprocess.PIPE)
     return redirect('cluster:resources')
+
+def resources_migration(request, resource_name, node_name):
+    subprocess.run(["crm", "resource", "unmigrate", resource_name[1:]], stdout=subprocess.PIPE)
+    subprocess.run(["crm", "resource", "migrate", resource_name[1:], node_name], stdout=subprocess.PIPE)
+    return redirect('cluster:resources')
+
+
+def resources_migrate(request, resource_name):
+    template = loader.get_template('resources_migrate.html')
+
+    out = subprocess.check_output(["crm", "resource", "show", resource_name[1:]])
+    info = out.decode('ascii')
+    info = info.split(":")[1].strip()
+
+    nodes = []
+    out = subprocess.run(["crm", "node", "status"], stdout=subprocess.PIPE)
+    out = ET.fromstring(out.stdout.decode('utf-8'))
+
+    for node in out:
+        status = "online"
+        maintenance = False
+        for instance_attributes in node:
+            for nvpair in instance_attributes:
+                if nvpair.get('name') == "standby" and nvpair.get('value') == "on":
+                    status = "standby"
+                if nvpair.get('name') == "maintenance" and nvpair.get('value') == "on":
+                    maintenance = True
+        if status == "online":
+            nodes.append(node.get('uname'))
+
+    context = {
+        'resource': resource_name,
+        'msg': info,
+        'nodes': nodes,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 ##### AGENTS
