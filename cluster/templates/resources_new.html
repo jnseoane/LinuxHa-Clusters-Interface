@@ -3,7 +3,7 @@
 {% block title %}New Resource{% endblock %}
 {% block content %}
     {% if agents %}
-        <div class="tm-title">Agents</div>
+        <div class="tm-title">Select an Agent</div>
         <ul class="tm-main-nav-ul-margin">
             {% for agent in agents %}
                  <a href="{% url 'cluster:resources_form' agent.name %}" class="tm-nav-agent"><li>{{ agent.name }}</li></a>

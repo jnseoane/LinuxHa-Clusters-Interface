@@ -11,7 +11,7 @@
         <input type="text" name="nombre" id="nombre" required><br>
     {% for param in params %}
         <label class="tm-nav-item-custom" for="param_name">{{ param.name }}</label>
-        <input {% if param.content_type == 'boolean' %}type="checkbox"{% elif param.content_type == 'integer' %}type="number"{% elif param.content_type == 'string' %}type="text"{% endif %} name={{ param.name }} id={{ param.name }}{% if param.default_value == 'true' %} checked{% endif %}><br>
+        <input {% if param.content_type == 'boolean' %}type="checkbox"{% elif param.content_type == 'integer' %}type="number"{% elif param.content_type == 'string' %}type="text"{% endif %} name={{ param.name }} id={{ param.name }}{% if param.default_value == 'true' %} checked{% endif %} {% if param.required %}required="true"{% endif %}><br>
     {% endfor %}
         <input class="tm-button-form" type="submit" value="Create">
     </form>

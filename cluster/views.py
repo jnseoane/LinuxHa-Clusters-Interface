@@ -123,9 +123,10 @@ def resources_created(request, agent_name):
     for key, value in input.items():
         auxstr +=" " + key + "=" + value
 
-    return_code = subprocess.call(auxstr, stdin=subprocess.PIPE,  stdout=subprocess.PIPE, shell=True)
+    return_code = subprocess.call(auxstr, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+
     if return_code != 0:
-        msg = "El recurso no se ha creado correctamente, compruebe que ya exista con ese nombre o haya algún parametro incorrecto o que falte por añadir."
+        msg = "El recurso no se ha creado correctamente, compruebe que ya exista con ese nombre o haya algún parametro incorrecto."
     else:
         msg = "El recurso se ha creado correctamente."
     #Enviar a pantalla de confirmación
