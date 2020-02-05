@@ -6,9 +6,28 @@
         <div class="tm-title">Nodes</div>
         {% if nodes %}
             <ul class="tm-main-nav-ul">
-            {% for node in nodes %}
-                <li class="tm-nav-item-custom"> <b> Node:</b> {{ node.name }}  <b>Id:</b> {{ node.id }}    <b>Status:</b> {{ node.status }}    <b>Maintenance:</b> {{ node.maintenance }}   {% if node.status == "online" %}<a href= "{% url 'cluster:nodes_standby' node.name %}" class="tm-button" >Standby</a> {% else %}<a href="{% url 'cluster:nodes_online' node.name %}" class="tm-button">Online</a>{% endif %}   {% if node.maintenance == True %}<a href="{% url 'cluster:nodes_ready' node.name %}" class="tm-button">Ready</a> {% else %}<a href="{% url 'cluster:nodes_maintenance' node.name %}" class="tm-button">Maintenance</a>{% endif %}</li>
-            {% endfor %}
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">ID</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Maintenance</th>
+                    <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for node in nodes %}
+                    <tr>
+                        <td>{{ node.name }}</td>
+                        <td>{{ node.id }} </td>
+                        <td>{{ node.status }}</td>
+                        <td>{{ node.maintenance }}</td>
+                        <td>{% if node.status == "online" %}<a href= "{% url 'cluster:nodes_standby' node.name %}" class="tm-button" >Standby</a> {% else %}<a href="{% url 'cluster:nodes_online' node.name %}" class="tm-button">Online</a>{% endif %}   {% if node.maintenance == True %}<a href="{% url 'cluster:nodes_ready' node.name %}" class="tm-button">Ready</a> {% else %}<a href="{% url 'cluster:nodes_maintenance' node.name %}" class="tm-button">Maintenance</a>{% endif %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+            </table>
             </ul>
         {% else %}
             <li class="tm-nav-item-custom"><b>No hay nodos en este momento</b></li>

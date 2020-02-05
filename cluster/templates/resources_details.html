@@ -6,9 +6,28 @@
         <div class="tm-title">Resources Management</div>
         {% if resources %}
             <ul class="tm-main-nav-ul">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">String</th>
+                    <th scope="col">Node</th>
+                    <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
                 {% for resource in resources %}
-                     <li class="tm-nav-item-custom"><b>Name: </b>{{ resource.nombre }}  <b>Status: </b>{{ resource.status }}  <b>String: </b>{{ resource.str }} {% if "Stopped" in resource.status %}<a href="{% url 'cluster:resources_start' resource.nombre %}" class="tm-button">Start</a> <a href="{% url 'cluster:resources_delete' resource.nombre %}" class="tm-button">Delete</a> {% else %}<a href="{% url 'cluster:resources_stop' resource.nombre %}" class="tm-button">Stop</a> <a href="{% url 'cluster:resources_migrate' resource.nombre %}" class="tm-button">Migrate</a>{% endif %}</li><br>
+                    <tr>
+                        <td>{{ resource.nombre }}</td>
+                        <td>{{ resource.status }}</td>
+                        <td>{{ resource.str }}</td>
+                        <td>{{ resource.node }}</td>
+                        <td>{% if "Stopped" in resource.status %}<a href="{% url 'cluster:resources_start' resource.nombre %}" class="tm-button">Start</a> <a href="{% url 'cluster:resources_delete' resource.nombre %}" class="tm-button">Delete</a> {% else %}<a href="{% url 'cluster:resources_stop' resource.nombre %}" class="tm-button">Stop</a> <a href="{% url 'cluster:resources_migrate' resource.nombre %}" class="tm-button">Migrate</a>{% endif %}</td>
+                    </tr>
                 {% endfor %}
+            </tbody>
+            </table>
             </ul>
         {% else %}
             <li class="tm-nav-item-custom"><b>No hay recursos en este momento</b></li>

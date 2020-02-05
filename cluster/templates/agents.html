@@ -5,13 +5,26 @@
     <div class="container">
         <div class="tm-title">Agents</div>
         <a class="tm-button" href="{% url 'cluster:refresh' %}">Actualizar</a><br>
-
+        <br/>
         {% if agents %}
-             <ul class="tm-main-nav-ul-margin">
+            <table class="table">
+              <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
             {% for agent in agents %}
-                <a href="{% url 'cluster:agent_details' agent.name %}" class="tm-nav-item-custom"><li>{{ agent.name }}</li></a>
+                <tr>
+                        <td>{{ agent.name }}</td>
+                        <td>{{ agent.title }} </td>
+                        <td><a href="{% url 'cluster:agent_details' agent.name %}" class="tm-button">More</a></td>
+                </tr>
             {% endfor %}
-             </ul>
+            </tbody>
+            </table>
         {% else %}
             <li class="tm-nav-item-custom"><b>No hay agentes en este momento. Prueba a actualizar</b></li>
         {% endif %}

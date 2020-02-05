@@ -19,14 +19,6 @@ def index(request):
 def nodes(request):
     template = loader.get_template('nodes.html')
     #Conseguimos la información de los nodos para enviarla a la vista
-    #En nodes se almacena la información de los nodos de esta forma:
-    #nodes = [{'id': '2130706433', 'name': 'base', 'status': 'online', 'maintenance': False}, {'id': '3232249967', 'name': 'servidor1', 'status': 'online', 'maintenance': False}]
-
-
-    #Comandos para poner en mantenimiento y en standby para futuro
-        # Standby subprocess.run(["crm", "node", "attribute", "servidorX", "set", "standby", "on"], stdout=subprocess.PIPE)
-        # Maintenance subprocess.run(["crm", "node", "attribute", "servidorX", "set", "maintenance", "on"], stdout=subprocess.PIPE)
-
     nodes = []
     out = subprocess.run(["crm", "node", "status"], stdout=subprocess.PIPE)
     out = ET.fromstring(out.stdout.decode('utf-8'))
@@ -147,11 +139,20 @@ def resources_details(request):
         for item in result:
             if item != "":
                 lista = item.split("\t")
-                resources.append({"nombre": lista[0], "str": lista[1][:-1], "status": lista[2]})
-            # Enviar la informacion a la plantilla
-            context = {
-                'resources': resources,
-            }
+                out = subprocess.check_output(["crm", "resource", "show", lista[0][1:]])
+                print(out)
+                out = out.decode('ascii')
+                print(out)
+                #Si un recurso esta parado se considera que no esta alojado en ningun nodo
+                if out == "":
+                    node = "XXXXX"
+                else:
+                   node = out.split(":")[1].strip()
+                resources.append({"nombre": lista[0], "str": lista[1][:-1], "status": lista[2], "node": node})
+        # Enviar la informacion a la plantilla
+        context = {
+            'resources': resources,
+        }
     else:
         # Enviar la informacion a la plantilla
         context = {
@@ -238,7 +239,6 @@ def agents_refresh(request):
         'agent_params': params
     }
     return redirect('cluster:agents')
-    #return HttpResponse(template.render(context, request))
 
 def agent_details(request, agent_name):
     template = loader.get_template('agent_details.html')
@@ -251,7 +251,6 @@ def agent_details(request, agent_name):
         'params': params,
     }
     return HttpResponse(template.render(context, request))
-    #return redirect('cluster:agents')
 
 def ra_json_refresh():
     agents_db = Agent.objects.all()
